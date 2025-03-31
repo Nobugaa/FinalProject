@@ -1,0 +1,68 @@
+﻿@page
+@model LibraryManagement.Pages.Books.IndexModel
+@{
+}
+<h1>Book List</h1>
+@* @if (User.IsInRole("Admin"))
+{
+    <p>
+        <a href="~/Books/Create">Create New Book</a>
+    </p>
+} *@
+<form method="get">
+
+    <p>
+        <a href="~/Books/CreateBook">Create New Book</a>
+    </p>
+    <p>
+        <label for="searchString">Search:</label>
+        <input type="text" id="searchString" name="searchString" value="@Model.Keyword" />
+        <input type="submit" value="Search" />
+    </p>
+    @if (Model.Books == null || !Model.Books.Any())
+    {
+        <p>No books found.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th>ISBN</th>
+                    <th>Quantity</th>
+                    <th>Created At</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in Model.Books)
+                {
+                    <tr>
+                        <td>@book.Title</td>
+                        <td>@book.Author</td>
+                        <td>@book.Category</td>
+                        <td>@book.Isbn</td>
+                        <td>@book.Quantity</td>
+                        <td>@book.CreatedAt</td>
+                        <td>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a href="/Books/Edit/@book.Id">Edit</a>
+                                <a href="/Books/Delete/@book.Id">Delete</a>
+                            }
+                            else
+                            {
+
+                                <a asp-page="/Books/Borrow" asp-route-id="@book.Id">Borrow</a>
+                            }
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</form>

@@ -1,4 +1,24 @@
+using BusinessObject.Models;
+using DataAccessObject;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+using Repository;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<MyLibraryContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnenction")));
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Auth/Login";
+        options.AccessDeniedPath = "/Auth/AccessDenied";
+    });
+
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<BookDAO>();
+builder.Services.AddHttpContextAccessor();
+
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -18,6 +38,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
