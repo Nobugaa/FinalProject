@@ -16,7 +16,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IBorrowRepository, BorrowRepository>();
 builder.Services.AddScoped<BookDAO>();
+builder.Services.AddScoped<UserDAO>();
+builder.Services.AddScoped<BorrowDAO>();
 builder.Services.AddHttpContextAccessor();
 
 
@@ -40,6 +44,12 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapGet("/", (context) =>
+{
+    context.Response.Redirect("/Auth/Login");
+    return Task.CompletedTask;
+});
+
 
 app.MapRazorPages();
 

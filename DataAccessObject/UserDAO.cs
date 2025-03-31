@@ -1,12 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+﻿using BusinessObject.Models;
+using Repository;
 
 namespace DataAccessObject
 {
-    class UserDAO
+    public class UserDAO
     {
+        private readonly IUserRepository _userRepository;
+        public UserDAO(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
+        public User FindByEmail(string email) => _userRepository.FindByEmail(email);
+        public bool ValidateUser(string emaill, string password)
+        {
+            var user = FindByEmail(emaill);
+            if (user == null || user.Active != true)
+            {
+                return false;
+            }
+            return user.Password == password;
+        }
     }
 }

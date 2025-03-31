@@ -3,19 +3,16 @@
 @{
 }
 <h1>Book List</h1>
-@* @if (User.IsInRole("Admin"))
+@if (User.IsInRole("Admin"))
 {
     <p>
         <a href="~/Books/Create">Create New Book</a>
     </p>
-} *@
+} 
 <form method="get">
 
     <p>
-        <a href="~/Books/CreateBook">Create New Book</a>
-    </p>
-    <p>
-        <label for="searchString">Search:</label>
+        <label for="searchString">Search Title:</label>
         <input type="text" id="searchString" name="searchString" value="@Model.Keyword" />
         <input type="submit" value="Search" />
     </p>
