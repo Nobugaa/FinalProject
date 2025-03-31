@@ -20,11 +20,28 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a class="nav-link text-dark" asp-page="/Books/Index">Manage Courses</a>
+                                <a class="nav-link text-dark" asp-page="/Books/Index">Manage Accounts</a>
+                            }
+                            else if (User.IsInRole("Student"))
+                            {
+                                <a class="nav-link text-dark" asp-page="/Books/Index">Borrow & Search</a>
+                            }
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <a class="nav-link text-dark" asp-page="/Auth/Login">Login</a>
+                            }
+                            else if (ViewContext.RouteData.Values["Page"]?.ToString() != "/Auth/Login")
+                            {
+                                <a class="nav-link text-dark" asp-page="/Auth/Logout">Logout</a>
+                            }
                         </li>
+
+                       
                     </ul>
                 </div>
             </div>
