@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User>
     {
         User FindByEmail(string email);
     }

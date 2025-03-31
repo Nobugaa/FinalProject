@@ -31,6 +31,7 @@ namespace LibraryManagement.Pages.Books
                 Quantity = quantity,
                 Isbn = isbn,
                 CreatedAt = System.DateTime.Now
+
             };
             var success = _bookDAO.Create(book);
             if (success)

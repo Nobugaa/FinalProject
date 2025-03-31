@@ -2,6 +2,7 @@
 
 namespace Repository
 {
+
     public class UserRepository : Repository<User>, IUserRepository
     {
         public UserRepository(MyLibraryContext context) : base(context)
