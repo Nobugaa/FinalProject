@@ -20,7 +20,7 @@ namespace DataAccessObject
         }
         public bool Create(Book book)
         {
-            var exist = _bookRepository.FindByName(book.Title);
+            var exist = _bookRepository.GetById(book.Id);
             if (exist == null)
             {
                 _bookRepository.Add(book);
@@ -28,6 +28,30 @@ namespace DataAccessObject
             }
             return false;
 
+        }
+        public bool Delete(Book book)
+        {
+            var exist = _bookRepository.GetById(book.Id);
+            if (exist != null)
+            {
+                _bookRepository.Delete(book.Id);
+                return true;
+            }
+            return false;
+        }
+        public Book GetById(int id)
+        {
+            return _bookRepository.GetById(id);
+        }
+        public bool Update(Book book)
+        {
+            var exist = _bookRepository.GetById(book.Id);
+            if (exist == null)
+            {
+                _bookRepository.Update(book);
+                return true;
+            }
+            return false;
         }
     }
 }

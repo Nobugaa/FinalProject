@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace LibraryManagement.Pages.Books
 {
-    public class IndexModel : PageModel
+    public class IndexBookModel : PageModel
     {
         private readonly BookDAO _bookDAO;
         public string Keyword { get; set; }
         public IEnumerable<Book> Books { get; set; }
-        public IndexModel(BookDAO bookDAO)
+        public IndexBookModel(BookDAO bookDAO)
         {
             _bookDAO = bookDAO;
         }
