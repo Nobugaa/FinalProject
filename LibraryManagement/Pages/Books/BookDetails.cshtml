@@ -1,0 +1,81 @@
+﻿@page
+@model LibraryManagement.Pages.Books.BookDetailsModel
+
+@{
+    ViewData["Title"] = "Book Details";
+}
+
+<h1>Book Details</h1>
+
+<div>
+    <h4>Book</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Book.Title)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Book.Title)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Book.Author)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Book.Author)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Book.Category)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Book.Category)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Book.Isbn)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Book.Isbn)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Book.Quantity)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Book.Quantity)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Book.CreatedAt)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Book.CreatedAt)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Book.AddedByNavigation)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Book.AddedByNavigation.Email)</dd>
+    </dl>
+</div>
+
+<h4>Borrowing History</h4>
+<hr />
+
+@if (Model.BorrowRecords.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Borrow Date</th>
+                <th>Due Date</th>
+                <th>Returned</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var record in Model.BorrowRecords)
+            {
+                <tr>
+                    <td>@record.User.FullName</td>
+                    <td>@record.BorrowDate.ToString("yyyy-MM-dd")</td>
+                    <td>@record.DueDate.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        @if (record.Returned)
+                        {
+                            <span class="text-success">Yes</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">No</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No borrowing records found.</p>
+}
+
+<div class="mt-3">
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+    <a asp-page="./Edit" asp-route-id="@Model.Book.Id" class="btn btn-primary">Edit</a>
+</div>

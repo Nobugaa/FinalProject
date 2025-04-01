@@ -1,0 +1,68 @@
+﻿@page
+@model LibraryManagement.Pages.Account.IndexUserModel
+
+@{
+    ViewData["Title"] = "User List";
+}
+
+<h1>Users</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-success">Create New</a>
+</p>
+
+@if (Model.User.Any()) // Check if User list is not empty to avoid errors
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.User.First().FullName)</th>
+                <th>@Html.DisplayNameFor(model => model.User.First().Email)</th>
+                <th>@Html.DisplayNameFor(model => model.User.First().Role)</th>
+                <th>@Html.DisplayNameFor(model => model.User.First().CreatedAt)</th>
+                <th>@Html.DisplayNameFor(model => model.User.First().Active)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.User)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Role)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                    <td>
+                        @if (item.Active == true)
+                        {
+                            <span class="text-success">Active</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">Inactive</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-page="./Profile" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
+                        <a asp-page="./DeleteUser" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+
+                        <form method="post" asp-page-handler="ToggleActive" asp-route-id="@item.Id" style="display:inline;">
+                            @if (item.Active == true)
+                            {
+                                <button type="submit" class="btn btn-warning btn-sm">Deactivate</button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-success btn-sm">Activate</button>
+                            }
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No users found.</p>
+}

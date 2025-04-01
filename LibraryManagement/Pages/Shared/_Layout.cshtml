@@ -23,7 +23,7 @@
                             @if (User.IsInRole("Admin"))
                             {
                                 <a class="nav-link text-dark" asp-page="/Books/Index">Manage Courses</a>
-                                <a class="nav-link text-dark" asp-page="/Books/Index">Manage Accounts</a>
+                                <a class="nav-link text-dark" asp-page="/User/Index">Manage Accounts</a>
                             }
                             else if (User.IsInRole("Student"))
                             {
