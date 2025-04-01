@@ -45,10 +45,11 @@
                         <td>@book.Quantity</td>
                         <td>@book.CreatedAt</td>
                         <td>
+                            <a asp-page="/Books/BookDetails" asp-route-id="@book.Id">Details</a>
                             @if (User.IsInRole("Admin"))
                             {
-                                <a href="/Books/UpdateBook/@book.Id">Edit</a>
-                                <a href="/Books/DeleteBook/@book.Id">Delete</a>
+                                <a asp-page="/Books/UpdateBook" asp-route-id="@book.Id">Update</a>
+                                <a asp-page="/Books/DeleteBook" asp-route-id="@book.Id">Delete</a>
                             }
                             else
                             {
@@ -63,3 +64,7 @@
         </table>
     }
 </form>
+
+<script src="~/js/microsoft/signalr/dist/browser/signalr.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+<script src="~/js/site.js"></script>

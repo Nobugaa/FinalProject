@@ -22,7 +22,7 @@ namespace LibraryManagement.Pages.Books
         public void OnGet()
         {
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             var title = Request.Form["Title"];
             var author = Request.Form["Author"];
@@ -55,9 +55,10 @@ namespace LibraryManagement.Pages.Books
             var success = _bookDAO.Create(book);
             if (success)
             {
-                _hubContext.Clients.All.SendAsync("LoadALL");
+                await _hubContext.Clients.All.SendAsync("LoadALL"); // Notify clients
                 return RedirectToPage("/Books/Index");
             }
+
 
             ErrorMessage = "Book already exists";
             return Page();
