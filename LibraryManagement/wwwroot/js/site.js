@@ -1,11 +1,17 @@
 ﻿"use strict";
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/SignalrServer").build();
+// Create SignalR connection
+var connection = new signalR.HubConnectionBuilder()
+    .withUrl("/SignalrServer") // Match the hub route
+    .build();
 
+// Reload the page when a new book is added
 connection.on("LoadALL", function () {
-    location.href = './Index';
+    console.log("Reloading  list...");
+    location.reload();
 });
 
+// Start connection
 connection.start().catch(function (err) {
-    return console.error(err.toString());
+    console.error("Error connecting to SignalR:", err.toString());
 });

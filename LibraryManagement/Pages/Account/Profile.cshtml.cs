@@ -16,7 +16,7 @@ namespace LibraryManagement.Pages.Account
             _bookDAO = bookDAO;
         }
 
-        public User User { get; set; } = default!;
+        public User User1 { get; set; } = default!;
         public List<Book> BooksAddedByAdmin { get; set; } = new List<Book>();
 
         public async Task<IActionResult> OnGetAsync(int id)
@@ -35,14 +35,12 @@ namespace LibraryManagement.Pages.Account
                 return NotFound();
             }
 
-            User = user;
+            User1 = user;
 
-            // Check if the logged-in user is an admin (role "1")
-            var role = HttpContext.Session.GetString("UserRole"); // Assuming UserRole is stored in session
-            if (role == "1")
+            if (User.IsInRole("Admin"))
             {
                 // Fetch books added by this admin
-                BooksAddedByAdmin = _bookDAO.GetBooksAddedByUser(User.Id).ToList();
+                BooksAddedByAdmin = _bookDAO.GetBooksAddedByUser(User1.Id).ToList();
             }
 
             return Page();

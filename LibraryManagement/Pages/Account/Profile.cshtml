@@ -8,30 +8,30 @@
 <h1>Profile</h1>
 
 <div>
-    <h4>User Details</h4>
+    <h4>User1 Details</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.User.FullName)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.User.FullName)</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.User1.FullName)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.User1.FullName)</dd>
 
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.User.Email)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.User.Email)</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.User1.Email)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.User1.Email)</dd>
 
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.User.Role)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.User.Role)</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.User1.Role)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.User1.Role)</dd>
 
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.User.CreatedAt)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.User.CreatedAt)</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.User1.CreatedAt)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.User1.CreatedAt)</dd>
 
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.User.Active)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.User.Active)</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.User1.Active)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.User1.Active)</dd>
     </dl>
 </div>
 
 <h4>Borrowing History</h4>
 <hr />
 
-@if (Model.User.BorrowRecords.Any())
+@if (Model.User1.BorrowRecords.Any())
 {
     <table class="table">
         <thead>
@@ -43,7 +43,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var record in Model.User.BorrowRecords)
+            @foreach (var record in Model.User1.BorrowRecords)
             {
                 <tr>
                     <td>@record.Book.Title</td>
@@ -69,7 +69,7 @@ else
     <p>No borrowing records found.</p>
 }
 
-
+@if (User.IsInRole("Admin"))
 {
     <h4>Books Added by You</h4>
     <hr />
@@ -109,6 +109,6 @@ else
 }
 
 <div>
-    <a asp-page="./EditProfile" asp-route-id="@Model.User.Id">Edit</a> |
+    <a asp-page="./EditProfile" asp-route-id="@Model.User1.Id">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>
