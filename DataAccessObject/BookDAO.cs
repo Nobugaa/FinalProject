@@ -46,12 +46,21 @@ namespace DataAccessObject
         public bool Update(Book book)
         {
             var exist = _bookRepository.GetById(book.Id);
-            if (exist == null)
+            if (exist != null)
             {
                 _bookRepository.Update(book);
                 return true;
             }
             return false;
+        }
+        public List<Book> GetBooksAddedByUser(int userId)
+        {
+            return _bookRepository.GetBooksAddedByUser(userId);
+        }
+
+        public Book GetByIdWithBorrowRecords(int id)
+        {
+            return _bookRepository.GetByIdWithBorrowRecords(id);
         }
     }
 }

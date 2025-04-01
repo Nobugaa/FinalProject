@@ -8,6 +8,7 @@ namespace LibraryManagement.Pages.Books
     public class BookDetailsModel : PageModel
     {
         private readonly BookDAO _bookDAO;
+
         public string ErrorMessage { get; set; }
         public BookDetailsModel(BookDAO bookDAO)
         {
@@ -15,6 +16,7 @@ namespace LibraryManagement.Pages.Books
         }
 
         public Book Book { get; set; } = default!;
+        public List<BorrowRecord> BorrowRecords { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -23,15 +25,15 @@ namespace LibraryManagement.Pages.Books
                 return NotFound();
             }
 
-            var book = _bookDAO.GetById(id);
+            var book = _bookDAO.GetByIdWithBorrowRecords(id);
             if (book == null)
             {
                 return NotFound();
             }
-            else
-            {
-                Book = book;
-            }
+
+            Book = book;
+            BorrowRecords = book.BorrowRecords.ToList(); // Fetch Borrow Records
+
             return Page();
         }
     }

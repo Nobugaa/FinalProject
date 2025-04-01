@@ -1,0 +1,114 @@
+﻿@page
+@model LibraryManagement.Pages.Account.ProfileModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1>Profile</h1>
+
+<div>
+    <h4>User Details</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.User.FullName)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.User.FullName)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.User.Email)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.User.Email)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.User.Role)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.User.Role)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.User.CreatedAt)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.User.CreatedAt)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.User.Active)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.User.Active)</dd>
+    </dl>
+</div>
+
+<h4>Borrowing History</h4>
+<hr />
+
+@if (Model.User.BorrowRecords.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Book Title</th>
+                <th>Borrow Date</th>
+                <th>Due Date</th>
+                <th>Returned</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var record in Model.User.BorrowRecords)
+            {
+                <tr>
+                    <td>@record.Book.Title</td>
+                    <td>@record.BorrowDate.ToString("yyyy-MM-dd")</td>
+                    <td>@record.DueDate.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        @if (record.Returned)
+                        {
+                            <span class="text-success">Yes</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">No</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No borrowing records found.</p>
+}
+
+
+{
+    <h4>Books Added by You</h4>
+    <hr />
+
+    @if (Model.BooksAddedByAdmin.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th>ISBN</th>
+                    <th>Quantity</th>
+                    <th>Added At</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in Model.BooksAddedByAdmin)
+                {
+                    <tr>
+                        <td>@book.Title</td>
+                        <td>@book.Author</td>
+                        <td>@book.Category</td>
+                        <td>@book.Isbn</td>
+                        <td>@book.Quantity</td>
+                        <td>@book.CreatedAt.ToString("yyyy-MM-dd")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>You have not added any books.</p>
+    }
+}
+
+<div>
+    <a asp-page="./EditProfile" asp-route-id="@Model.User.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
