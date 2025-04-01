@@ -9,5 +9,4 @@ namespace ProductManagementASPNETCoreRazorPage.Hubs
             await Clients.All.SendAsync("LoadALL");
         }
     }
-
 }
