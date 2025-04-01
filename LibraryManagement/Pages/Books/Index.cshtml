@@ -6,7 +6,7 @@
 @if (User.IsInRole("Admin"))
 {
     <p>
-        <a href="~/Books/Create">Create New Book</a>
+        <a href="~/Books/CreateBook">Create New Book</a>
     </p>
 } 
 <form method="get">
@@ -47,8 +47,8 @@
                         <td>
                             @if (User.IsInRole("Admin"))
                             {
-                                <a href="/Books/Edit/@book.Id">Edit</a>
-                                <a href="/Books/Delete/@book.Id">Delete</a>
+                                <a href="/Books/UpdateBook/@book.Id">Edit</a>
+                                <a href="/Books/DeleteBook/@book.Id">Delete</a>
                             }
                             else
                             {
