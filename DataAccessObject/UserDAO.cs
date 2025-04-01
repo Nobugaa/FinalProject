@@ -43,5 +43,9 @@ namespace DataAccessObject
             }
             return false;
         }
+        public void Add(User user)
+        {
+            _userRepository.Add(user);
+        }
     }
 }
